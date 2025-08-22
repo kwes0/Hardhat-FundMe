@@ -14,15 +14,17 @@ contract FundMe {
     //We can do this using a constructor, which initializes when deployed.
     address public owner; //A declared variable
 
-    AggregatorV3Interface public priceFeed; //When this is assigned we can use it in the function to getPrice
+    AggregatorV3Interface public priceFeed; //Assign an address to this type.
 
-    constructor() {
+    constructor(address priceFeedAddr) {
         owner = msg.sender; //Calling this inside the constructor ensures, whomever deploys it is name owner and should be able to call the withdraw function.
+        priceFeed = AggregatorV3Interface(priceFeedAddr);
+
     }
 
     function fund() public payable {
         require(
-            msg.value.getConversionRate() >= minimumUsd,
+            msg.value.getConversionRate(priceFeed) >= minimumUsd,
             "Amount is not enough"
         );
         funders.push(msg.sender);
