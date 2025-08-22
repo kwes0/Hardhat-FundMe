@@ -14,6 +14,8 @@ contract FundMe {
     //We can do this using a constructor, which initializes when deployed.
     address public owner; //A declared variable
 
+    AggregatorV3Interface public priceFeed; //When this is assigned we can use it in the function to getPrice
+
     constructor() {
         owner = msg.sender; //Calling this inside the constructor ensures, whomever deploys it is name owner and should be able to call the withdraw function.
     }

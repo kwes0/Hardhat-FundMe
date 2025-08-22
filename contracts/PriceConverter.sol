@@ -12,9 +12,7 @@ library PriceConverter {
         return uint256(answer * 1e10); // This will be the value of ETH to USD and exponentially raise to 10 to remove any decimal places.
     }
 
-    function getConversionRate(
-        uint256 ethAmount
-    ) internal view returns (uint256) {
+    function getConversionRate(uint256 ethAmount) internal view returns (uint256) {
         uint256 ethPrice = getPrice();
         uint256 ethAmountInUsd = (ethAmount * ethPrice) / 1e18;
         return ethAmountInUsd;

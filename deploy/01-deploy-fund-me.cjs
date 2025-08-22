@@ -1,17 +1,4 @@
-/*
-Traditional deploying steps
-    - import contract
-    - main function
-    - calling of main function
-
-With hardhat-deploy:
-    - importing
-    - a function to handle deployment which is exported as the default function for hardhat deploy to look for
-    function deployFunc(hre){}
-    module.exports.default = deployFunc
-*/
-
-const { getNamedAccounts, deployments, config } = require("hardhat");
+//const { getNamedAccounts, deployments, config } = require("hardhat");
 
 // Deploy Function Type 1
 /*
@@ -42,9 +29,12 @@ module.exports = async (hre) => {
 
 */
 
-//Deploy function type 3
+//Deploy function type 3 with syntax sugar
 module.exports = async ({getNamedAccounts, deployments}) => {
-    const {deploy, log} = deployments; //This two are being grabbed from deployments which is being grabbed from HRE
-    const {deployer} = await getNamedAccounts();
+    const {deploy, log} = deployments; //This two functions are being grabbed from deployments which is being grabbed from HRE
+    const {deployer} = await getNamedAccounts(); //NamedAccounts are defined in the config to give a specific account, a specific number that can be called.
     const chainId = network.config.chainId
+
+    //Using a mock for local node interaction
+    
 }
