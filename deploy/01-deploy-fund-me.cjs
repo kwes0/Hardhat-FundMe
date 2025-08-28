@@ -63,3 +63,5 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 }
 
 module.exports.tags = ["all", "FundMe"]
+
+//yarn hardhat deploy will capture everything and also stick it to the local node which is also hardhat 
