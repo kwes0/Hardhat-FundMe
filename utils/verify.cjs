@@ -1,4 +1,4 @@
-const { run } = requuire("hardhat")
+const { run } = require("hardhat")
 
 const verify = async (contractAddress, args) => {
     console.log("Na sukuma code, ya kukembwa baadae...")

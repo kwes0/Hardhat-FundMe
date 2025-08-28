@@ -34,7 +34,7 @@ const {
     developmentChain,
 } = require("../helper-hardhat-config.cjs")
 const { network } = require("hardhat")
-const { verify } = require("../utils/verify")
+const { verify } = require("../utils/verify.cjs")
 
 //Deploy function type 3 with syntax sugar
 module.exports = async ({ getNamedAccounts, deployments }) => {
@@ -45,7 +45,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     // A file assigning price feed address to network in order to be dynamic
     // const ethUsdPriceFeedAddr = networdConfig[chainId]["ethUsdPriceFeed"]
     let ethUsdPriceFeedAddr
-    
+
     if (developmentChain.includes(chainId)) {
         const ethUsdAggregator = await get("MockV3Aggregator")
         ethUsdPriceFeedAddr = ethUsdAggregator.address //because if deployed on local, deploy mock will be triggered. so we grab that here as well.
@@ -56,22 +56,25 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     // if contract doesn't exist, we deploy a mini one for local testing
 
     //Deploying the contract - deploy takes name and a list of overrides
-    const args = [ethUsdPriceFeedAddr] //adding arguments to this array for reference purposes. 
+    const args = [ethUsdPriceFeedAddr] //adding arguments to this array for reference purposes.
 
     const fundMe = await deploy("FundMe", {
         from: deployer,
         args: [args], //Anything necessary to deploy the code such as price feed
         log: true,
+        waitConfirmations: network.config.blockConfirmations || 1,
     })
 
     ///@notice Adding verification when not deployed to local node
-    if(!developmentChain.includes(chainId) && process.env.ETHERSCAN_API_KEY){
+    if (!developmentChain.includes(chainId) && process.env.ETHERSCAN_API_KEY) {
         //Verify - Our main verify code will be elsewhere and then imported here
-        await verify (fundMe.address, args)
+        await verify(fundMe.address, args)
     }
-    log("---------------------------------------------------------------------------")
+    log(
+        "---------------------------------------------------------------------------"
+    )
 }
 
 module.exports.tags = ["all", "FundMe"]
 
-//yarn hardhat deploy will capture everything and also stick it to the local node which is also hardhat 
+//yarn hardhat deploy will capture everything and also stick it to the local node which is also hardhat
