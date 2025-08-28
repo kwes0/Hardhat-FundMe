@@ -9,9 +9,11 @@ require("dotenv").config()
 
 //RPC_URLs
 const LH_RPC_URL = process.env.LOCALHOST_RPC_URL
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL
 
 // PRIVATE_KEYs
 const LH_PVT_KEY = process.env.LOCALHOST_PRIVATE_KEY
+const SEPOLIA_PVT_KEY = process.env.SEPOLIA_PRIVATE_KEY
 
 module.exports = {
     // solidity: "0.8.19", //Should be the same as in the contracts defined
@@ -35,6 +37,11 @@ module.exports = {
                 // accounts:[],
                 chainId: 31337,
             },
+            sepolia:{
+                url:SEPOLIA_RPC_URL,
+                accounts:SEPOLIA_PVT_KEY,
+                chainId:11155111,
+            }
         },
     },
 }
